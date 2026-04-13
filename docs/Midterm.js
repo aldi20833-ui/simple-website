@@ -296,7 +296,7 @@
     }
 
     // Expose fungsi ke window object agar bisa diakses dari script lain
-    window._26d15 = {
+    window._Midterm = {
         mount1: t => { se(t) },
         mount2: t => { ce(t) },
         mount3: t => { de(t) },
@@ -305,7 +305,7 @@
         mount6: t => { Me(t) }
     };
 
-    console.log("[marker] utssee.js loaded");
+    console.log("[marker] Midterm.js loaded");
 
     // Mendapatkan arah tetangga (8 arah) untuk algoritma Cellular Automata
     function ue(t) {
