@@ -66,13 +66,13 @@ html {
 }
 
 body {
-  margin: 2em;
+  margin: 2em auto;
   padding: 0;
   max-width: 1820px;
   background: var(--bg);
   color: var(--fg);
   font-family: Calibri;
-  line-height: 1.5;
+  line-height: 0.8;
 }
 
 a {
