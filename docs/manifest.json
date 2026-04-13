@@ -1,0 +1,16 @@
+{
+  "name": "Mockup Fisika Komputasi - Syidan",
+  "short_name": "Midterm",
+  "description": "Physical Systems Computing UI",
+  "start_url": "/Midterm.html",
+  "display": "standalone",
+  "background_color": "#f4f8f5",
+  "theme_color": "#4f81bd",
+  "icons": [
+    {
+      "src": "iconweb.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    }
+  ]
+}
