@@ -5,7 +5,7 @@
         return e instanceof HTMLDivElement ? (Object.assign(e.style, a), e) : null
     }
 
-    // dDeklarasi variabel global untuk data matriks (M), parameter grid, dan palet warna
+    // Deklarasi variabel global untuk data matriks (M), parameter grid, dan palet warna
     var a = {},
         M = [],
         S, U, P, Y, w, ee, I, T, W, X, q, z, V, G,
@@ -16,7 +16,7 @@
     // Fungsi untuk membuat struktur Panel yang berisi elemen Canvas
     function F(t, n = {}) {
         let e = document.createElement("div");
-        e.className = "panel", Object.assign(e.style, n);
+        e.className = "panel panel-row", Object.assign(e.style, n);
         let l = document.createElement("canvas");
         return l.id = t,
             l.style.width = "100%",
@@ -207,7 +207,7 @@
     // Fungsi pembuat elemen Textarea untuk input data teks
     function B(t, n = {}) {
         let e = document.createElement("div");
-        e.className = "panel", Object.assign(e.style, n);
+        e.className = "panel panel-row", Object.assign(e.style, n);
         for (let l of t) {
             let o = document.createElement("textarea");
             o.id = l, o.placeholder = l, o.style.flex = "1", o.style.fontFamily = "monospace",
@@ -228,48 +228,41 @@
     // Membangun tampilan UI untuk Panel 1 (Data Grid Generator)
     function oe() {
         let t = document.createElement("div");
-        a = { border: "0px solid #f44", height: "100%", display: "flex", flexDirection: "row" },
-            Object.assign(t.style, a), a = { display: "flex", flexDirection: "row", minWidth: "0" };
-        let e = B(["params-1"], a);
-        h(e, "textarea", [1]), a = { display: "flex", flexDirection: "column", height: "40%", minHeight: "0" };
-        let i = k(["wipe-1", "data-1", "read-1", "exec-1"], [!0, !0, !1, !1], a);
-        a = { display: "flex", flexDirection: "row", minWidth: "0" };
-        let c = B(["grid"], a);
+        t.className = "panel-main";
+        let e = B(["params-1"], {});
+        h(e, "textarea", [1]);
+        let i = k(["wipe-1", "data-1", "read-1", "exec-1"], [!0, !0, !1, !1], { display: "flex", flexDirection: "column", height: "40%", minHeight: "0" });
+        let c = B(["grid"], {});
         return h(c, "textarea", [1]), t.append(e), t.append(i), t.append(c), h(t, "div.panel", [1.5, 1.3, 4]), t
     }
 
     // Membangun tampilan UI untuk Panel 2 (Heatmap Visualizer)
     function ie() {
         let t = document.createElement("div");
-        a = { border: "0px solid #f44", height: "100%", display: "flex", flexDirection: "row" },
-            Object.assign(t.style, a), a = { display: "flex", flexDirection: "row", minWidth: "0" };
-        let e = B(["params-2"], a);
-        h(e, "textarea", [1]), a = { display: "flex", flexDirection: "column", height: "40%", minHeight: "0" };
-        let i = k(["wipe-2", "data-2", "read-2", "exec-2"], [!0, !1, !1, !1], a);
-        a = { display: "flex", flexDirection: "row", minWidth: "0" };
-        let c = F("map-2", a);
+        t.className = "panel-main";
+        let e = B(["params-2"], {});
+        h(e, "textarea", [1]);
+        let i = k(["wipe-2", "data-2", "read-2", "exec-2"], [!0, !1, !1, !1], { display: "flex", flexDirection: "column", height: "40%", minHeight: "0" });
+        let c = F("map-2", {});
         return h(c, "canvas", [1]), t.append(e), t.append(i), t.append(c), h(t, "div.panel", [1.5, 1.3, 4]), t
     }
 
     // Membangun tampilan UI untuk Panel 3 (Coordinate Tracker)
     function ae() {
         let t = document.createElement("div");
-        a = { border: "0px solid #f44", height: "100%", display: "flex", flexDirection: "row" },
-            Object.assign(t.style, a), a = { display: "flex", flexDirection: "row", minWidth: "0" };
-        let e = B(["params-3"], a);
-        h(e, "textarea", [1]), a = { display: "flex", flexDirection: "column", height: "40%", minHeight: "0" };
-        let i = k(["wipe-3", "data-3", "read-3", "exec-3"], [!0, !1, !1, !1], a);
-        a = { display: "flex", flexDirection: "row", minWidth: "0" };
-        let c = F("map-3", a);
+        t.className = "panel-main";
+        let e = B(["params-3"], {});
+        h(e, "textarea", [1]);
+        let i = k(["wipe-3", "data-3", "read-3", "exec-3"], [!0, !1, !1, !1], { display: "flex", flexDirection: "column", height: "40%", minHeight: "0" });
+        let c = F("map-3", {});
         return h(c, "canvas", [1]), t.append(e), t.append(i), t.append(c), h(t, "div.panel", [1.5, 1.3, 4]), t
     }
 
     // Membuat panel kosong dengan tombol wipe
     function re() {
         let t = document.createElement("div");
-        a = { border: "0px solid #f44", height: "100%", display: "flex", flexDirection: "column" },
-            Object.assign(t.style, a), a = { display: "flex", flexDirection: "row" };
-        let l = k(["wipe", "", "", "", "", ""], [!0], a);
+        t.className = "panel-col-full";
+        let l = k(["wipe", "", "", "", "", ""], [!0], { display: "flex", flexDirection: "row" });
         return t.append(l), t
     }
 
@@ -356,7 +349,7 @@
             let e = "";
             e += `# palette\n`, e += `NUMC 10\n`, e += `COL0 #888\n`, e += `COL1 #22f\n`, e += `COL2 #33f\n`, e += `COL3 #44f\n`, e += `COL4 #55f\n`, e += `COL5 #66f\n`, e += `COL6 #88f\n`, e += `COL7 #aaf\n`, e += `COL8 #ccf\n`, e += "COL9 #eef",
                 txas[0].value = e;
-            // MATRIKS BESAR (Agents Input): Representasi grid awal simulasi
+            // MATRIKS BESAR Representasi grid awal simulasi
             let l = "";
             l += `9;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0\n`,
                 l += `9;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0\n`,
@@ -415,32 +408,27 @@
         for (let o = 0; o < e.length; o++) e[o].indexOf("COL" + j) == 0 && (L.push(e[o].split(" ")[1]), j += 1)
     }
 
-    // // Membangun tampilan UI untuk Panel 5 (Simulation Board
+    // Membangun tampilan UI untuk Panel 5 (Simulation Board)
     function he() {
         let t = document.createElement("div");
-    // 1. Kontainer utama menggunakan ROW agar elemen berjejer ke samping
-        let mainStyle = { border: "0px solid #f44", height: "100%", display: "flex", flexDirection: "row", gap: "5px" };
-        Object.assign(t.style, mainStyle);
+        t.className = "panel-sim-main";
 
-    // --- BAGIAN KIRI (Textarea) ---
-        let leftStyle = { display: "flex", flexDirection: "row", flex: "0.5" };
-        let e = B(["params-input", "agents-input"], leftStyle);
+        // --- BAGIAN KIRI (Textarea) ---
+        let e = B(["params-input", "agents-input"], {});
+        e.classList.add("panel-sim-left");
         h(e, "textarea", [0.5, 2.75]);
         txas = e.querySelectorAll("textarea");
 
-    // --- BAGIAN TENGAH (Tombol Vertikal) ---
-    // 2. Ubah flexDirection dari "row" menjadi "column"
-        let buttonStyle = { display: "flex", flexDirection: "column", gap: "2px" };
-        let i = k(["wipe", "data", "read", "exec", "none", "info"], [!0, !0, !1, !1, !1, !0], buttonStyle, xe);
+        // --- BAGIAN TENGAH (Tombol Vertikal) ---
+        let i = k(["wipe", "data", "read", "exec", "none", "info"], [!0, !0, !1, !1, !1, !0], { display: "flex", flexDirection: "column", gap: "2px" }, xe);
 
-    // --- BAGIAN KANAN (Canvas Output) ---
-        let canvasStyle = { flex: "2", display: "flex", flexDirection: "row", minHeight: "0", border: "1px solid var(--muted-border)" };
-        let c = F("can-output", canvasStyle);
+        // --- BAGIAN KANAN (Canvas Output) ---
+        let c = F("can-output", {});
+        c.classList.add("panel-sim-canvas");
 
-    // Susun urutannya: Input -> Tombol -> Canvas
-        t.append(e); // Paling kiri
-        t.append(i); // Di tengah
-        t.append(c); // Paling kanan
+        t.append(e);
+        t.append(i);
+        t.append(c);
 
         h(t, "div.panel", [5.3, 0.8, 7.5]);
         return t;
@@ -488,12 +476,11 @@
         let l = {};
         R.push(n);
         let o = document.createElement("div");
-        l = { width: "100%", border: "0px solid yellow", display: "flex", flexDirection: "row" },
-            Object.assign(o.style, l);
+        o.className = "progress-row";
         let i = document.createElement("button");
-        i.innerHTML = n[0], i.id = t, l = { flex: "1" }, Object.assign(i.style, l), C.push(i), v.push(!1);
+        i.innerHTML = n[0], i.id = t, i.style.flex = "1", C.push(i), v.push(!1);
         let r = document.createElement("progress");
-        return r.value = "0", r.max = "100", l = { flex: "7", margin: "0 0.2em" }, Object.assign(r.style, l), H.push(r),
+        return r.value = "0", r.max = "100", r.style.flex = "7", r.style.margin = "0 0.2em", H.push(r),
             o.append(i), o.append(r), i.addEventListener("click", c => { be(c) }), o
     }
 
@@ -532,8 +519,7 @@
     // Membangun tampilan UI untuk Panel 6 (Status Progress)
     function ve() {
         let t = document.createElement("div");
-        a = { border: "0px solid #f44", height: "100%", display: "flex", flexDirection: "column" },
-            Object.assign(t.style, a);
+        t.className = "panel-col-full";
         let n = O("prog-1", ["scan", "stop"]),
             e = O("prog-2", ["filter", "stop"]),
             l = O("prog-3", ["format", "stop"]),
@@ -544,7 +530,7 @@
 
     // Mounting Panel 6 ke elemen container
     function Me(t) {
-        a = { marginTop: "1.5em", width: "320px", display: "flex", flexDirection: "column", background: "var(--box-bg)", border: "1px solid var(--border)", display: "inline-block", marginRight: "0.5em" };
+        a = { marginTop: "1.5em", width: "420px", display: "flex", flexDirection: "column", background: "var(--box-bg)", border: "1px solid var(--border)", display: "inline-block", marginRight: "0.5em" };
         let n = E(t, a);
         if (n == null) return null;
         let e = ve();
