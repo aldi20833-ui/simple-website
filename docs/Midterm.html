@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang=en-us dir=ltr>
+<head>
+    <meta charset=utf-8>
+    <meta name=viewport content="width=device-width">
+    <meta name=color-scheme content="light dark">
+    <!-- Icon Web -->
+    <link rel=icon href=iconweb.png sizes=16x16 type=image/png>
+    <link rel=manifest href=/manifest.json>
+    <!-- Nama Web -->
+    <title>Mockup Fisika Komputasi - Syidan</title>
+    <!-- CSS Utama -->
+    <link rel=stylesheet href='26cb0-style1.css'>
+        <!-- Info build Hugo, defer = load setelah HTML selesai di-parse -->
+    <script src="26cb0-Hugo-info.js" defer></script>
+    <script src="Midterm.js"></script>
+</head>
+
+<body>
+  <header>
+    <!-- CSS khusus header -->
+    <link rel=stylesheet href='26cb0-style3-header.css'>
+    <h1>Midterm Imitating UI</h1>
+  </header>
+
+  <main>
+    <head>
+            <!-- CSS khusus konten artikel -->
+            <link rel=stylesheet href='26cb0-style2.css'>
+    </head>
+
+    <div class=note-container>
+        <h1 class=note-title>physical systems computing</h1>
+
+        <!-- Metadata artikel: penulis, tanggal -->
+        <div class=info-after-title>
+          <ul class=authors-container>
+            <li class=author>
+              <span>Akhmad Rosyidan Rifaldi-20224019</span>
+            </li>
+          </ul>
+
+          <div class=date-reading-time-edit>
+            <time datetime="2026-04-06T13:48:15 07:00">07 Apr 2026</time>
+          </div>
+         </div>
+
+        <div class=note-content>
+          <p>It is an illustration of chaining panels v0.2.</p>
+
+          <!-- Kontainer kosong, diisi oleh JS saat mount -->
+          <div id=cnt1></div> <!-- Panel 1: generate grid acak -->
+          <div id=cnt2></div> <!-- Panel 2: heatmap warna -->
+          <div id=cnt3></div> <!-- Panel 3: plot dua titik acak -->
+          <div id=cnt4></div> <!-- Panel 4: tombol wipe -->
+          <div id=cnt5></div> <!-- Panel 5: simulasi erosi grid -->
+          <div id=cnt6></div> <!-- Panel 6: progress bar -->
+
+        <h2 id=notes>notes</h2>
+        </div>
+    </div>
+  </main>
+
+  <footer>
+    <!-- CSS khusus footer -->
+    <link rel=stylesheet href='26cb0-style4-footer.css'>
+    <p>
+      Copyright Syidan 2026
+      All rights reserved.
+      Unless stated otherwise in a note.
+    </p>
+  </footer>
+
+  <!-- Mount semua panel ke div kontainernya masing-masing -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          _26d15.mount1("cnt1");
+          _26d15.mount2("cnt2");
+          _26d15.mount3("cnt3");
+          _26d15.mount4("cnt4");
+          _26d15.mount5("cnt5");
+          _26d15.mount6("cnt6");
+        });
+    </script>
+</body>
+</html>
