@@ -1,5 +1,4 @@
-/* note.css */
-
+/* Note layout */
 .note-container {
   background-color: var(--bg);
   color: var(--fg);
@@ -7,6 +6,7 @@
 
 .note-title {
   color: var(--fg);
+  font-weight: bold;
 }
 
 .note-content {
@@ -21,12 +21,15 @@
 
 .info-after-title {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
   color: var(--muted-text);
 }
 
 .date-reading-time-edit {
   flex: 2.5;
   text-align: right;
+  margin-left: auto;
   border: 0px solid blue;
 }
 
@@ -57,14 +60,82 @@
   overflow-x: scroll;
 }
 
-.mol-container {
-  margin: auto;
-  position: relative;
-  height: 300px;
-  width: 300px;
+/* Panel layout */
+.panel-main {
+    border: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
 }
 
-.scatter-container {
-  width: 360px;
-  height: 200px;
+.panel-row {
+    display: flex;
+    flex-direction: row;
+    min-width: 0;
+}
+
+.panel-col-40 {
+    display: flex;
+    flex-direction: column;
+    height: 40%;
+    min-height: 0;
+}
+
+.panel-col-full {
+    border: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-buttons-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.panel-sim-main {
+    border: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.panel-sim-left {
+    display: flex;
+    flex-direction: row;
+    flex: 0.5;
+}
+
+.panel-sim-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.panel-sim-canvas {
+    flex: 2;
+    display: flex;
+    flex-direction: row;
+    min-height: 0;
+    border: 1px solid var(--muted-border);
+}
+
+.panel-progress {
+    border: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.progress-row {
+    width: 100%;
+    border: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+/* Progress bar */
+.progress-row progress {
+    flex: 15;
 }
