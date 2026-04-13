@@ -11,7 +11,8 @@
     <title>Mockup Fisika Komputasi - Syidan</title>
     <!-- CSS Utama -->
     <link rel=stylesheet href='26cb0-style1.css'>
-        <!-- Info build Hugo, defer = load setelah HTML selesai di-parse -->
+    <link rel=stylesheet href='26cb0-style2.css'>
+    <!-- Info build Hugo, defer = load setelah HTML selesai di-parse -->
     <script src="26cb0-Hugo-info.js" defer></script>
     <script src="Midterm.js"></script>
 </head>
@@ -24,14 +25,8 @@
   </header>
 
   <main>
-    <head>
-            <!-- CSS khusus konten artikel -->
-            <link rel=stylesheet href='26cb0-style2.css'>
-    </head>
-
     <div class=note-container>
-        <h1 class=note-title>physical systems computing</h1>
-
+        <h1 class=note-title>FI5005 Physical System Computation</h1>
         <!-- Metadata artikel: penulis, tanggal -->
         <div class=info-after-title>
           <ul class=authors-container>
@@ -47,14 +42,13 @@
 
         <div class=note-content>
           <p>It is an illustration of chaining panels v0.2.</p>
-
           <!-- Kontainer kosong, diisi oleh JS saat mount -->
-          <div id=cnt1></div> <!-- Panel 1: generate grid acak -->
-          <div id=cnt2></div> <!-- Panel 2: heatmap warna -->
-          <div id=cnt3></div> <!-- Panel 3: plot dua titik acak -->
-          <div id=cnt4></div> <!-- Panel 4: tombol wipe -->
-          <div id=cnt5></div> <!-- Panel 5: simulasi erosi grid -->
-          <div id=cnt6></div> <!-- Panel 6: progress bar -->
+          <div id=cnt1></div> 
+          <div id=cnt2></div> 
+          <div id=cnt3></div> 
+          <div id=cnt4></div> 
+          <div id=cnt5></div> 
+          <div id=cnt6></div> 
 
         <h2 id=notes>notes</h2>
         </div>
@@ -74,12 +68,12 @@
   <!-- Mount semua panel ke div kontainernya masing-masing -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-          _26d15.mount1("cnt1");
-          _26d15.mount2("cnt2");
-          _26d15.mount3("cnt3");
-          _26d15.mount4("cnt4");
-          _26d15.mount5("cnt5");
-          _26d15.mount6("cnt6");
+          _Midterm.mount1("cnt1");
+          _Midterm.mount2("cnt2");
+          _Midterm.mount3("cnt3");
+          _Midterm.mount4("cnt4");
+          _Midterm.mount5("cnt5");
+          _Midterm.mount6("cnt6");
         });
     </script>
 </body>
