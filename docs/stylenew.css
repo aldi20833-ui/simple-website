@@ -1,0 +1,518 @@
+/* ═══════════════════════════════════════════
+   1. RESET & BASE STYLE
+═══════════════════════════════════════════ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --box-bg:  #ffffff;
+    --border:  #e0e0e0;
+    --text:    #222222;
+    --accent:  #1565c0;
+    --red:     #ef5350;
+    --blue:    #1e88e5;
+    --green:   #388e3c;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size:   13px;
+    background:  #f4f6f9;
+    color:       var(--text);
+    min-height:  100vh;
+}
+
+/* JUDUL UTAMA */
+h1 {
+    background:     var(--accent);
+    color:          #ffffff;
+    padding:        14px 12px 10px;
+    font-size:      18px;
+    font-weight:    700;
+    letter-spacing: 0.4px;
+    text-align:     center;
+    margin-bottom:  4px;
+}
+
+/* ═══════════════════════════════════════════
+   2. CONTAINER UTAMA (3 KOLOM BESAR)
+═══════════════════════════════════════════ */
+#container {
+    display:        flex !important;
+    flex-direction: row !important;
+    flex-wrap:      wrap;
+    gap:            16px;
+    width:          100%;
+    max-width:      100% !important;
+    margin:         0 auto;
+    padding:        16px 16px 0;
+    align-items:    stretch;
+}
+
+#panel-atas,
+#animasi-container,
+#manual-container {
+    background:    var(--box-bg);
+    border-radius: 8px;
+    padding:       16px;
+    box-shadow:    0 1px 6px rgba(0,0,0,0.09);
+    border:        1px solid var(--border);
+    flex:          1 1 300px !important;
+    min-width:     330px;
+}
+
+/* ═══════════════════════════════════════════
+   3. KOLOM 1 — PANEL ATAS (INPUT + TOMBOL + OUTPUT)
+═══════════════════════════════════════════ */
+#panel-atas {
+    display:         flex !important;
+    flex-direction:  row !important;
+    justify-content: space-between;
+    align-items:     stretch;
+    gap:             10px;
+}
+
+#input-box  { width: 32% !important; }
+#output-box { width: 43% !important; }
+
+#button-container {
+    width:          22% !important;
+    display:        flex !important;
+    flex-direction: column !important;
+    gap:            8px;
+    margin-top:     32px;
+    justify-content: flex-start !important;
+}
+
+#input-box h3,
+#output-box h3 {
+    font-size:      12px;
+    font-weight:    700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color:          var(--accent);
+    margin-bottom:  8px;
+    padding-bottom: 4px;
+    border-bottom:  2px solid var(--accent);
+}
+
+/* ═══════════════════════════════════════════
+   4. TEXTAREA
+═══════════════════════════════════════════ */
+textarea {
+    font-family:  'Courier New', monospace !important;
+    font-size:    12px !important;
+    line-height:  1.2;
+    border:       0.5px solid var(--border) !important;
+    border-radius: 4px;
+    padding:      6px 8px !important;
+    color:        var(--text);
+    outline:      none;
+    resize:       none;
+}
+textarea:focus         { border-color: var(--accent) !important; background: #ffffff; }
+textarea[readonly]     { background: #f5f5f5; color: #444; cursor: default; }
+
+#text-input,
+#text-output {
+    width:      100% !important;
+    min-height: 230px;
+    background: #ffffff !important;
+}
+
+/* ═══════════════════════════════════════════
+   5. TOMBOL & BADGE
+═══════════════════════════════════════════ */
+#button-container button {
+    width:         100% !important;
+    padding:       8px 4px !important;
+    height:        auto !important;
+    flex:          unset !important;
+    background:    var(--accent);
+    color:         #ffffff;
+    border:        none;
+    border-radius: 4px;
+    font-size:     10px;
+    font-weight:   700;
+    cursor:        pointer;
+    transition:    background 0.15s, transform 0.1s;
+}
+#button-container button:hover  { background: #0d47a1; }
+#button-container button:active { transform: scale(0.97); }
+
+#btn-gaya            { background: #6a1b9a !important; }
+#btn-gaya:hover      { background: #4a148c !important; }
+#btn-gaya.aktif      { background: #e65100 !important; animation: pulse 0.8s infinite alternate; }
+
+@keyframes pulse { from { opacity:1; } to { opacity:0.72; } }
+
+.sbadge {
+    text-align:    center;
+    font-size:     10px;
+    font-weight:   600;
+    border-radius: 4px;
+    margin-top:    4px;
+    display:       block !important;
+    width:         100% !important;
+    height:        auto !important;
+    padding:       8px 4px !important;
+    flex:          unset !important;
+}
+.s0 { background: #fce4ec !important; color: #b71c1c !important; border: 1px solid #ef9a9a !important; }
+.s1 { background: #fff8e1 !important; color: #e65100 !important; border: 1px solid #ffcc80 !important; }
+.s2 { background: #e8f5e9 !important; color: #1b5e20 !important; border: 1px solid #a5d6a7 !important; }
+
+/* ═══════════════════════════════════════════
+   6. KOLOM 2 & 3 — CANVAS & PANEL
+═══════════════════════════════════════════ */
+#animasi-container,
+#manual-container {
+    display:        flex !important;
+    flex-direction: column;
+    gap:            4px;
+}
+
+h2 {
+    font-size:      12px !important;
+    font-weight:    700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color:          var(--accent);
+    margin-bottom:  8px !important;
+    padding-bottom: 4px;
+    border-bottom:  2px solid var(--accent);
+}
+
+.ket {
+    font-size:  10px;
+    color:      #777;
+    font-style: italic;
+    margin:     6px 0 2px;
+}
+
+canvas {
+    display:       block;
+    margin-top:    4px;
+    background:    #ffffff;
+    width:         100% !important;
+    height:        auto;
+    border:        1px solid var(--border);
+    border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════════
+   7. SWITCH MANUAL
+═══════════════════════════════════════════ */
+#sw-panel {
+    display:               grid !important;
+    grid-template-columns: repeat(3, 1fr);
+    gap:                   8px;
+    margin:                4px 0 7px;
+    flex:                  unset !important;
+}
+
+.sw-box {
+    border-radius: 6px;
+    border:        2px solid var(--border);
+    text-align:    center;
+    transition:    border-color 0.15s, background 0.15s;
+    padding:       4px 2px;
+}
+.off-sw { background: #fafafa; border-color: #ccc; }
+.on-pos { background: #ffebee; border-color: #e53935; }
+.on-neg { background: #e3f2fd; border-color: #1e88e5; }
+
+.sw-num   { font-size: 9px;  color: #999; margin-bottom: 1px; }
+.sw-label { font-size: 11px; font-weight: 700; margin-bottom: 4px; }
+
+.sw-btn {
+    font-size:     10px;
+    font-weight:   700;
+    border-radius: 4px;
+    border:        1.5px solid #bbb;
+    background:    #f5f5f5;
+    cursor:        pointer;
+    transition:    background 0.12s;
+    display:       inline-block !important;
+    width:         auto !important;
+    padding:       4px 6px;
+}
+.sw-btn:hover { background: #e0e0e0; }
+.active-pos   { background: #e53935; color: #fff; border-color: #e53935; }
+.active-neg   { background: #1e88e5; color: #fff; border-color: #1e88e5; }
+
+/* ═══════════════════════════════════════════
+   8. PRESET & STEP BUTTONS
+═══════════════════════════════════════════ */
+.preset-label {
+    font-size:   10px;
+    font-weight: 600;
+    color:       #555;
+    margin:      8px 0 4px;
+}
+
+.step-btn {
+    display:       flex !important;
+    flex-wrap:     wrap;
+    gap:           5px;
+    margin-bottom: 6px;
+}
+
+.step-btn button {
+    font-size:     10px;
+    font-weight:   700;
+    border:        1.5px solid #999;
+    border-radius: 4px;
+    background:    #ffffff;
+    cursor:        pointer;
+    display:       inline-block !important;
+    transition:    background 0.12s, color 0.12s;
+    width:         auto !important;
+    padding:       4px 8px !important;
+}
+.step-btn button:hover { background: #e8eaf6; border-color: #3f51b5; color: #3f51b5; }
+
+/* ═══════════════════════════════════════════
+   9. ROTOR INFO
+═══════════════════════════════════════════ */
+.rotor-info,
+#rotorInfo3 {
+    font-family:   monospace;
+    font-size:     10px;
+    color:         #444;
+    background:    #f5f5f5;
+    border-radius: 4px;
+    margin:        6px 0 4px;
+    border:        1px solid var(--border);
+    word-break:    break-all;
+    flex:          unset !important;
+    padding:       5px 8px;
+}
+
+/* ═══════════════════════════════════════════
+   10. GRAFIK θ(t) — WRAPPER
+═══════════════════════════════════════════ */
+#grafik-wrapper {
+    padding: 0 16px 16px;
+}
+
+#grafik-container {
+    background:    var(--box-bg);
+    border-radius: 8px;
+    padding:       16px;
+    box-shadow:    0 1px 6px rgba(0,0,0,0.09);
+    border:        1px solid var(--border);
+    width:         100%;
+}
+
+#grafik-container h2 {
+    font-size:      12px !important;
+    font-weight:    700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color:          var(--accent);
+    margin-bottom:  8px !important;
+    padding-bottom: 4px;
+    border-bottom:  2px solid var(--accent);
+}
+
+#grafik-toolbar {
+    display:     flex;
+    align-items: center;
+    gap:         10px;
+    margin-bottom: 6px;
+    flex-wrap:   wrap;
+}
+
+#grafik-toolbar label {
+    font-size: 11px;
+    color:     #555;
+    display:   flex;
+    align-items: center;
+    gap:       4px;
+}
+
+#grafik-toolbar select,
+#grafik-toolbar input[type=number] {
+    font-size:     11px;
+    padding:       2px 6px;
+    border:        1px solid var(--border);
+    border-radius: 4px;
+    background:    #fff;
+    color:         var(--text);
+    outline:       none;
+}
+#grafik-toolbar select:focus,
+#grafik-toolbar input[type=number]:focus {
+    border-color: var(--accent);
+}
+
+#grafik-toolbar button {
+    font-size:     10px;
+    font-weight:   700;
+    padding:       4px 10px;
+    border:        none;
+    border-radius: 4px;
+    background:    var(--accent);
+    color:         #fff;
+    cursor:        pointer;
+    transition:    background 0.15s;
+}
+#grafik-toolbar button:hover { background: #0d47a1; }
+#grafik-toolbar button.danger { background: #c62828; }
+#grafik-toolbar button.danger:hover { background: #b71c1c; }
+
+#canvas-grafik {
+    display:       block;
+    width:         100% !important;
+    height:        200px;
+    background:    #ffffff;
+    border:        1px solid var(--border);
+    border-radius: 4px;
+    cursor:        crosshair;
+    margin-top:    0;
+}
+
+#grafik-legend {
+    display:   flex;
+    gap:       16px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.legend-item {
+    display:     flex;
+    align-items: center;
+    gap:         5px;
+    font-size:   10px;
+    color:       #555;
+}
+
+.legend-line-solid {
+    width:         18px;
+    height:        2px;
+    background:    #1565c0;
+    border-radius: 1px;
+}
+.legend-line-dashed {
+    width:         18px;
+    height:        0;
+    border-top:    2px dashed #c62828;
+}
+
+#grafik-readout {
+    font-size:   10px;
+    color:       #888;
+    font-family: monospace;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+/* Tabel ringkasan komutasi (di bawah grafik, opsional) */
+#tabel-komutasi {
+    width:       100%;
+    border-collapse: collapse;
+    font-size:   10px;
+    margin-top:  10px;
+}
+#tabel-komutasi th {
+    background:  #e8eaf6;
+    color:       #283593;
+    font-weight: 700;
+    padding:     4px 6px;
+    border:      1px solid #c5cae9;
+    text-align:  center;
+}
+#tabel-komutasi td {
+    padding:     3px 6px;
+    border:      1px solid #e0e0e0;
+    text-align:  center;
+    color:       #333;
+}
+#tabel-komutasi tr:nth-child(even) td { background: #f5f5f5; }
+#tabel-komutasi tr.aktif-row td {
+    background:  #fff9c4 !important;
+    font-weight: 700;
+    color:       #e65100;
+}
+
+/* ═══════════════════════════════════════════
+   11. PWA INSTALL BANNER
+═══════════════════════════════════════════ */
+#pwa-banner {
+    display:     none;
+    align-items: center;
+    gap:         10px;
+    background:  #e3f2fd;
+    border:      1px solid #90caf9;
+    border-radius: 6px;
+    padding:     8px 14px;
+    margin:      8px 16px 0;
+    font-size:   11px;
+    color:       #0d47a1;
+}
+#pwa-banner button {
+    font-size:     10px;
+    font-weight:   700;
+    padding:       4px 12px;
+    border:        none;
+    border-radius: 4px;
+    background:    #1565c0;
+    color:         #fff;
+    cursor:        pointer;
+    transition:    background 0.15s;
+    white-space:   nowrap;
+}
+#pwa-banner button:hover  { background: #0d47a1; }
+#pwa-banner .pwa-close {
+    background: transparent;
+    color:      #555;
+    font-size:  14px;
+    padding:    2px 6px;
+    margin-left: auto;
+}
+#pwa-banner .pwa-icon {
+    font-size: 16px;
+}
+
+/* ═══════════════════════════════════════════
+   12. RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+    #container { flex-direction: row !important; }
+}
+
+@media (max-width: 768px) {
+    #container {
+        flex-direction: column !important;
+        padding: 10px 10px 0;
+    }
+    #panel-atas, #animasi-container, #manual-container {
+        width: 100% !important;
+        min-width: unset;
+    }
+    #panel-atas { flex-direction: column !important; }
+    #input-box, #output-box, #button-container {
+        width: 100% !important;
+    }
+    #button-container {
+        margin-top: 0;
+        flex-direction: row !important;
+        flex-wrap: wrap;
+    }
+    #button-container button {
+        width: auto !important;
+        flex: 1 1 80px !important;
+    }
+    #grafik-wrapper { padding: 0 10px 10px; }
+    #canvas-grafik  { height: 160px; }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 14px !important; padding: 10px 8px; }
+    #sw-panel { grid-template-columns: repeat(2, 1fr); }
+}
