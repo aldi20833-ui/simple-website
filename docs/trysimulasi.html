@@ -1,202 +1,229 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Simulasi BLDC Motor</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:var(--color-background-tertiary,#f5f5f5);padding:14px}
-h1{text-align:center;font-size:16px;font-weight:500;margin-bottom:12px;color:var(--color-text-primary)}
-.kolom{display:flex;gap:12px;flex-wrap:wrap}
-.kotak{background:var(--color-background-primary,white);border:1px solid var(--color-border-tertiary,#ccc);border-radius:10px;padding:12px}
-.kotak h2{font-size:13px;font-weight:500;margin-bottom:8px;border-bottom:1px solid var(--color-border-tertiary);padding-bottom:6px;color:var(--color-text-primary)}
-.kotak-input{width:210px;flex-shrink:0}
-.kotak-output{width:200px;flex-shrink:0}
-.kotak-animasi{flex:1;min-width:280px}
-.kotak-manual{flex:1;min-width:280px}
-textarea{width:100%;border:1px solid var(--color-border-secondary,#aaa);border-radius:4px;padding:6px;font-family:monospace;font-size:11px;resize:vertical;background:var(--color-background-secondary,#fafafa);color:var(--color-text-primary)}
-button{width:100%;margin-top:7px;padding:7px;font-size:12px;font-weight:500;cursor:pointer;border-radius:4px;border:1px solid var(--color-border-secondary,#999);background:var(--color-background-secondary,#eee);color:var(--color-text-primary)}
-#btnJalan{border-color:#388e3c;color:#388e3c}
-#btnStop{border-color:#c62828;color:#c62828}
-canvas{display:block;border:1px solid var(--color-border-tertiary,#ccc);border-radius:4px;background:white;width:100%;margin-bottom:8px}
-.ket{font-size:10px;color:var(--color-text-secondary,#666);text-align:center;margin-bottom:3px}
-label{font-size:11px;color:var(--color-text-secondary);display:block;margin-top:7px;margin-bottom:2px}
-.rc{display:flex;align-items:center;gap:5px}
-.rc input[type=range]{flex:1}
-.rc span{font-size:11px;min-width:52px;text-align:right;color:var(--color-text-primary);font-family:monospace}
-.sbadge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;margin-top:4px}
-.s0{background:#ffcdd2;color:#b71c1c}
-.s1{background:#fff9c4;color:#f57f17}
-.s2{background:#c8e6c9;color:#1b5e20}
-
-/* Switch panel */
-.sw-panel{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
-.sw-box{border:2px solid #ccc;border-radius:8px;padding:6px;text-align:center;cursor:pointer;user-select:none;transition:all .15s;background:var(--color-background-secondary,#f5f5f5)}
-.sw-box.on-pos{border-color:#388e3c;background:#e8f5e9}
-.sw-box.on-neg{border-color:#1e88e5;background:#e3f2fd}
-.sw-box.off-sw{border-color:#ccc;background:#f5f5f5}
-.sw-label{font-size:13px;font-weight:bold;color:#333;margin-bottom:4px}
-.sw-btns{display:flex;gap:4px;justify-content:center}
-.sw-btn{padding:3px 8px;font-size:11px;border-radius:4px;border:1px solid #aaa;cursor:pointer;background:#eee;color:#333;font-weight:500}
-.sw-btn.active-pos{background:#388e3c;color:white;border-color:#388e3c}
-.sw-btn.active-neg{background:#1e88e5;color:white;border-color:#1e88e5}
-.sw-num{font-size:18px;font-weight:bold;color:#555;margin-bottom:2px}
-.rotor-info{text-align:center;font-size:12px;padding:6px;background:var(--color-background-secondary);border-radius:6px;margin-bottom:8px;color:var(--color-text-primary)}
-.step-btn{display:flex;gap:6px;margin-bottom:8px}
-.step-btn button{margin-top:0;flex:1;font-size:11px;padding:5px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1565c0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="BLDC Motor">
+    <link rel="manifest" href="manifest1.json">
+    <link rel="apple-touch-icon" href="icon-19.png">
+    <title>Simulasi BLDC Motor — Akhmad Rosyidan</title>
+    <link rel="stylesheet" href="stylenew.css">
 </head>
 <body>
+
 <h1>Simulasi BLDC Motor — Komutasi Multi-Fasa</h1>
-<div class="kolom">
 
-<!-- ═══ INPUT ═══ -->
-<div class="kotak kotak-input">
-  <h2>INPUT</h2>
-
-  <label>Jumlah Fasa</label>
-  <select id="selFasa" style="width:100%;font-size:12px" onchange="hitung()">
-    <option value="1">1 Fasa</option>
-    <option value="2">2 Fasa</option>
-    <option value="3" selected>3 Fasa</option>
-  </select>
-
-  <label>Pole Pairs (p)</label>
-  <select id="selPole" style="width:100%;font-size:12px" onchange="onPoleChange()">
-    <option value="1">1 → 2 kutub</option>
-    <option value="2" selected>2 → 4 kutub</option>
-    <option value="3">3 → 6 kutub</option>
-    <option value="4">4 → 8 kutub</option>
-  </select>
-
-  <!-- Frekuensi → memanggil onFreqChange() agar RPM ikut update -->
-  <label>Frekuensi (Hz)</label>
-  <div class="rc">
-    <input type="range" id="sldF" min="0.01" max="5" value="1" step="0.01"
-           oninput="onFreqChange()">
-    <span id="lF">1.00 Hz</span>
-  </div>
-
-  <!-- RPM sekarang READ-ONLY, dihitung otomatis dari f dan p -->
-  <label>RPM (dihitung: 60 × f / p)</label>
-  <div class="rc">
-    <span id="lRPM" style="font-size:13px;font-weight:bold;color:#388e3c;min-width:100%">30.0 RPM</span>
-  </div>
-
-  <label>Arus (A) — negatif = balik arah</label>
-  <div class="rc">
-    <input type="range" id="sldI" min="-20" max="20" value="5" step="1"
-           oninput="onArusChange()">
-    <span id="lI">+5 A</span>
-  </div>
-
-  <label>Lilitan (N)</label>
-  <div class="rc">
-    <input type="range" id="sldN" min="10" max="500" value="200" step="10"
-           oninput="lbl('sldN','lN','',0)">
-    <span id="lN">200</span>
-  </div>
-
-  <label>Panjang Kumparan (m)</label>
-  <div class="rc">
-    <input type="range" id="sldL" min="0.01" max="0.5" value="0.10" step="0.01"
-           oninput="lbl('sldL','lL',' m',2)">
-    <span id="lL">0.10 m</span>
-  </div>
-
-  <button onclick="hitung()">HITUNG OUTPUT</button>
-  <button id="btnJalan" onclick="jalankan()">▶ JALANKAN (C2)</button>
-  <button id="btnStop"  onclick="hentikan()">■ STOP (C2)</button>
-
-  <div style="margin-top:10px;font-size:10px;color:var(--color-text-secondary);line-height:2">
-    <span style="color:#ef5350;font-weight:bold">■</span> Merah = Kutub N &nbsp;
-    <span style="color:#1e88e5;font-weight:bold">■</span> Biru = Kutub S<br>
-    <span style="color:#43a047;font-weight:bold">——</span> Pendek solid = TARIK<br>
-    <span style="color:#e53935;font-weight:bold">- - -</span> Panjang putus = TOLAK
-  </div>
+<!-- PWA Install Banner -->
+<div id="pwa-banner">
+    <span class="pwa-icon">⚡</span>
+    <span>Install aplikasi ini untuk digunakan secara offline!</span>
+    <button id="pwa-install-btn">Install Sekarang</button>
+    <button class="pwa-close" id="pwa-close-btn">✕</button>
 </div>
 
-<!-- ═══ OUTPUT ═══ -->
-<div class="kotak kotak-output">
-  <h2>OUTPUT</h2>
-  <div id="sbadge" class="sbadge s2">Stabil</div>
-  <textarea id="txtOut" rows="24" readonly style="margin-top:8px">Tekan HITUNG...</textarea>
-  <div style="font-size:10px;color:var(--color-text-secondary);margin-top:6px;line-height:1.6">
-    RPM = 60×f / p<br>B = μ₀NI/(2L)<br>τ = P/ω
-  </div>
-</div>
+<!-- 3 Kolom Utama -->
+<div id="container"></div>
 
-<!-- ═══ ANIMASI ═══ -->
-<div class="kotak kotak-animasi">
-  <h2>ANIMASI</h2>
-  <div class="ket">Canvas 1 — Solenoida &amp; Medan B (statis)</div>
-  <canvas id="c1" height="130"></canvas>
+<script src="bldc-helper.js"></script>
+<script src="scriptnew.js"></script>
+<script>
+/* ══════════════════════════════════════════════════════
+   INISIALISASI ELEMEN UI
+══════════════════════════════════════════════════════ */
+const cnt     = getContainer("container");
+const inTxa   = createTextarea("text-input");
+inTxa.value   = "V = 24\nI = 5\nN = 200\nL = 0.1\nf = 1\np = 1\nfasa = 3";
 
-  <div class="ket">Canvas 2 — Auto: Rotor digerakkan komutasi otomatis</div>
-  <canvas id="c2" height="320"></canvas>
-</div>
+const btnDiv    = createDiv("button-container");
+const btnHitung = createButton("btn-hitung", "COMPUTE");
+const btnJalan  = createButton("btn-jalan",  "▶ RUN");
+const btnStop   = createButton("btn-stop",   "■ STOP");
+const btnGaya   = createButton("btn-gaya",   "⚡ GAYA (F)");
 
-<!-- ═══ MANUAL (C3) ═══ -->
-<div class="kotak kotak-manual">
-  <h2>MANUAL SWITCH</h2>
-  <div class="ket">Canvas 3 — 6 Switch fisik seperti motor asli</div>
+const outTxa         = createTextarea("text-output");
+outTxa.readOnly      = true;
+outTxa.placeholder   = "Tekan COMPUTE untuk melihat hasil...";
 
-  <!-- 6 Switch -->
-  <div class="sw-panel" id="swPanel">
-    <div class="sw-box off-sw" id="swb1">
-      <div class="sw-num">1</div>
-      <div class="sw-label">A <span style="color:#c62828">+</span></div>
-      <div class="sw-btns"><button class="sw-btn" id="sw1" onclick="toggleSw(1)">OFF</button></div>
-    </div>
-    <div class="sw-box off-sw" id="swb2">
-      <div class="sw-num">2</div>
-      <div class="sw-label">B <span style="color:#c62828">+</span></div>
-      <div class="sw-btns"><button class="sw-btn" id="sw2" onclick="toggleSw(2)">OFF</button></div>
-    </div>
-    <div class="sw-box off-sw" id="swb3">
-      <div class="sw-num">3</div>
-      <div class="sw-label">C <span style="color:#c62828">+</span></div>
-      <div class="sw-btns"><button class="sw-btn" id="sw3" onclick="toggleSw(3)">OFF</button></div>
-    </div>
-    <div class="sw-box off-sw" id="swb4">
-      <div class="sw-num">4</div>
-      <div class="sw-label">C <span style="color:#1e88e5">−</span></div>
-      <div class="sw-btns"><button class="sw-btn" id="sw4" onclick="toggleSw(4)">OFF</button></div>
-    </div>
-    <div class="sw-box off-sw" id="swb5">
-      <div class="sw-num">5</div>
-      <div class="sw-label">B <span style="color:#1e88e5">−</span></div>
-      <div class="sw-btns"><button class="sw-btn" id="sw5" onclick="toggleSw(5)">OFF</button></div>
-    </div>
-    <div class="sw-box off-sw" id="swb6">
-      <div class="sw-num">6</div>
-      <div class="sw-label">A <span style="color:#1e88e5">−</span></div>
-      <div class="sw-btns"><button class="sw-btn" id="sw6" onclick="toggleSw(6)">OFF</button></div>
-    </div>
-  </div>
+const inputTitle     = document.createElement("h3");
+inputTitle.textContent = "INPUT";
+const outputTitle    = document.createElement("h3");
+outputTitle.textContent = "OUTPUT";
 
-  <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:4px">Preset Langkah Komutasi:</div>
-  <div class="step-btn">
-    <button onclick="setPreset(0)" title="0-60°">A⁺B⁻</button>
-    <button onclick="setPreset(1)" title="60-120°">A⁺C⁻</button>
-    <button onclick="setPreset(2)" title="120-180°">B⁺C⁻</button>
-    <button onclick="setPreset(3)" title="180-240°">B⁺A⁻</button>
-    <button onclick="setPreset(4)" title="240-300°">C⁺A⁻</button>
-    <button onclick="setPreset(5)" title="300-360°">C⁺B⁻</button>
-  </div>
+const inputBox  = createDiv("input-box");
+inputBox.append(inputTitle, inTxa);
+const outputBox = createDiv("output-box");
+outputBox.append(outputTitle, outTxa);
 
-  <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:4px">Gerak rotor manual:</div>
-  <div class="step-btn">
-    <button onclick="rotorStep(-1)" style="border-color:#1e88e5;color:#1e88e5">◀ -60°</button>
-    <button onclick="rotorStep(1)"  style="border-color:#388e3c;color:#388e3c">+60° ▶</button>
-  </div>
+const sbadge       = createDiv("sbadge");
+sbadge.className   = "sbadge s2";
+sbadge.textContent = "Stabil";
 
-  <div class="rotor-info" id="rotorInfo3">Sudut: 0° | Fasa: — | Step: —</div>
-  <canvas id="c3" height="320"></canvas>
-</div>
+/* ── Canvas animasi auto ── */
+const animDiv   = createDiv("animasi-container");
+const animTitle = createHeading2("ANIMASI AUTO");
 
-</div>
-<script src="script.js"></script>
+const ketC1           = document.createElement("div");
+ketC1.className       = "ket";
+ketC1.textContent     = "Canvas 1 — Solenoida & Medan B";
+const cvs1 = createCanvas("c1", 340, 140);
+
+const ketC2           = document.createElement("div");
+ketC2.className       = "ket";
+ketC2.textContent     = "Canvas 2 — Rotor digerakkan komutasi otomatis";
+const cvs2 = createCanvas("c2", 340, 320);
+
+/* ── Canvas manual switch ── */
+const manualDiv   = createDiv("manual-container");
+const manualTitle = createHeading2("MANUAL SWITCH (C3)");
+const manualKet   = document.createElement("div");
+manualKet.className   = "ket";
+manualKet.textContent = "Canvas 3 — Manual: 6 Switch fisik seperti motor asli";
+
+const swPanel  = createDiv("sw-panel");
+const swLabels = [
+    { lbl:'A', pol:'+', warna:'#c62828' },
+    { lbl:'B', pol:'+', warna:'#c62828' },
+    { lbl:'C', pol:'+', warna:'#c62828' },
+    { lbl:'C', pol:'−', warna:'#1e88e5' },
+    { lbl:'B', pol:'−', warna:'#1e88e5' },
+    { lbl:'A', pol:'−', warna:'#1e88e5' },
+];
+for (let i = 1; i <= 6; i++) {
+    const swBox       = createDiv("swb"+i);
+    swBox.className   = "sw-box off-sw";
+    const swNum       = document.createElement("div");
+    swNum.className   = "sw-num";
+    swNum.textContent = i;
+    const swLbl       = document.createElement("div");
+    swLbl.className   = "sw-label";
+    swLbl.innerHTML   = swLabels[i-1].lbl
+                      + ' <span style="color:'+swLabels[i-1].warna+'">'
+                      + swLabels[i-1].pol+'</span>';
+    const swBtn       = createButton("sw"+i, "OFF");
+    swBtn.className   = "sw-btn";
+    swBtn.addEventListener("click", () => toggleSw(i));
+    swBox.append(swNum, swLbl, swBtn);
+    swPanel.append(swBox);
+}
+
+const presetLabel         = document.createElement("div");
+presetLabel.className     = "preset-label";
+presetLabel.textContent   = "Preset Langkah Komutasi:";
+const presetPanel         = createDiv("preset-panel");
+presetPanel.className     = "step-btn";
+['A⁺B⁻','A⁺C⁻','B⁺C⁻','B⁺A⁻','C⁺A⁻','C⁺B⁻'].forEach((txt, i) => {
+    const btn = createButton("preset"+(i+1), txt);
+    btn.addEventListener("click", () => setPreset(i));
+    presetPanel.append(btn);
+});
+
+const rotorLabel          = document.createElement("div");
+rotorLabel.className      = "preset-label";
+rotorLabel.textContent    = "Gerak rotor manual:";
+const rotorPanel          = createDiv("rotor-panel");
+rotorPanel.className      = "step-btn";
+const btnMinus            = createButton("btnMinus", "◀ −60°");
+const btnPlus             = createButton("btnPlus",  "+60° ▶");
+btnMinus.style.cssText    = "border-color:#1e88e5;color:#1e88e5";
+btnPlus.style.cssText     = "border-color:#388e3c;color:#388e3c";
+rotorPanel.append(btnMinus, btnPlus);
+
+const rotorInfo           = createDiv("rotorInfo3");
+rotorInfo.className       = "rotor-info";
+rotorInfo.textContent     = "Sudut: 0° | Fasa: — | A=OFF B=OFF C=OFF";
+
+const cvs3 = createCanvas("c3", 340, 320);
+
+/* ── Susun DOM ── */
+const panelAtas = createDiv("panel-atas");
+panelAtas.append(inputBox, btnDiv, outputBox);
+btnDiv.append(btnHitung, btnJalan, btnStop, btnGaya, sbadge);
+
+cnt.append(panelAtas);
+cnt.append(animDiv);
+animDiv.append(animTitle, ketC1, cvs1, ketC2, cvs2);
+cnt.append(manualDiv);
+manualDiv.append(manualTitle, manualKet, swPanel,
+    presetLabel, presetPanel,
+    rotorLabel, rotorPanel,
+    rotorInfo, cvs3);
+
+changeElementsFlex(
+    ["text-input",        "1"],
+    ["button-container",  "1"],
+    ["text-output",       "1.5"],
+    ["animasi-container", "4"],
+    ["manual-container",  "4"]
+);
+
+consolex.setOutput(outTxa);
+consolex.setEOL("\n");
+
+/* ── Event listeners tombol utama ── */
+btnHitung.addEventListener("click", () => { hitung(); });
+btnStop.addEventListener("click",   () => { hentikan(); });
+btnGaya.addEventListener("click",   () => tekanGaya());
+btnMinus.addEventListener("click",  () => rotorStep(-1));
+btnPlus.addEventListener("click",   () => rotorStep(1));
+
+btnJalan.addEventListener("click", () => {
+    jalankan();
+});
+
+/* ══════════════════════════════════════════════════════
+   PATCH drawC2
+══════════════════════════════════════════════════════ */
+(function patchDrawC2() {
+    const _orig = drawC2;
+    window.drawC2 = function() {
+        _orig.apply(this, arguments);
+    };
+})();
+
+/* ══════════════════════════════════════════════════════
+   PWA — Service Worker & Install Banner
+══════════════════════════════════════════════════════ */
+let _deferredPrompt = null;
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+        .then(r  => console.log('[PWA] SW registered, scope:', r.scope))
+        .catch(e => console.warn('[PWA] SW failed:', e));
+}
+
+window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    _deferredPrompt = e;
+    const banner = document.getElementById('pwa-banner');
+    if (banner) banner.style.display = 'flex';
+});
+
+document.getElementById('pwa-install-btn').addEventListener('click', async () => {
+    if (!_deferredPrompt) return;
+    _deferredPrompt.prompt();
+    const { outcome } = await _deferredPrompt.userChoice;
+    _deferredPrompt = null;
+    document.getElementById('pwa-banner').style.display = 'none';
+    console.log('[PWA] Install outcome:', outcome);
+});
+
+document.getElementById('pwa-close-btn').addEventListener('click', () => {
+    document.getElementById('pwa-banner').style.display = 'none';
+});
+
+window.addEventListener('appinstalled', () => {
+    document.getElementById('pwa-banner').style.display = 'none';
+    console.log('[PWA] App installed!');
+});
+
+/* ══════════════════════════════════════════════════════
+   CHRONO / INISIALISASI
+══════════════════════════════════════════════════════ */
+hitung();
+</script>
+
 </body>
 </html>
