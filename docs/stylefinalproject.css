@@ -1,4 +1,4 @@
-
+/* Base */
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -36,9 +36,15 @@ body {
     min-height: 100vh;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   HEADER
-═══════════════════════════════════════════════════════════════════ */
+.subtitle{
+    margin-top:8px;
+    font-size:13px;
+    font-weight:400;
+    opacity:.9;
+}
+
+/* HEADER */
+
 h1 {
     background: linear-gradient(90deg, #00695c, #00897b);
     color: #ffffff;
@@ -61,9 +67,7 @@ h2, h3 {
     border-bottom: 2px solid var(--accent);
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   MAIN LAYOUT
-═══════════════════════════════════════════════════════════════════ */
+/*   MAIN LAYOUT */
 
 #container.main-container {
     display: grid;
@@ -145,9 +149,9 @@ h2, h3 {
     overflow: hidden;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   PANEL BOX — LIGHT INDUSTRIAL CARD
-═══════════════════════════════════════════════════════════════════ */
+
+/* PANEL BOX*/
+
 .panel-box {
     display: flex;
     flex-direction: column;
@@ -199,9 +203,9 @@ h2, h3 {
     margin: 4px 0 2px;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   INPUT / OUTPUT / TEXTAREA
-═══════════════════════════════════════════════════════════════════ */
+
+/*    INPUT / OUTPUT / TEXTAREA*/
+
 #input-box,
 #output-box,
 #button-badge-box {
@@ -255,9 +259,9 @@ textarea:focus {
         inset 0 1px 8px rgba(31, 41, 51, 0.06);
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   BUTTONS — INDUSTRIAL CONTROL STYLE
-═══════════════════════════════════════════════════════════════════ */
+
+/* BUTTONS  */
+
 #button-container {
     display: flex !important;
     flex-direction: column;
@@ -319,9 +323,10 @@ textarea:focus {
         inset 0 1px 0 rgba(255,255,255,0.35) !important;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   STATUS BADGE
-═══════════════════════════════════════════════════════════════════ */
+
+
+/*    STATUS BADGE */
+
 .sbadge {
     width: 100%;
     padding: 11px 10px;
@@ -355,9 +360,10 @@ textarea:focus {
     border-color: #00a884;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   CANVAS BOX
-═══════════════════════════════════════════════════════════════════ */
+
+
+/*    CANVAS BOX */
+
 #canvas-1-box,
 #canvas-2-box,
 #grafik-tegangan-box,
@@ -386,18 +392,18 @@ canvas {
         0 2px 8px rgba(31, 41, 51, 0.06);
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   DATA LOGGER — INDUSTRIAL TERMINAL
-═══════════════════════════════════════════════════════════════════ */
+
+/*    DATA LOGGER */
+
 #data-logger {
     background: #fafafa !important;
     color: #d7fff5 !important;
     border-color: #455a64 !important;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   PWA INSTALL PROMPT
-═══════════════════════════════════════════════════════════════════ */
+
+/*   PWA INSTALL PROMPT */
+
 #install-prompt {
     background: linear-gradient(180deg, #ffffff, #eef4f3) !important;
     color: var(--text) !important;
@@ -415,9 +421,9 @@ canvas {
     color: var(--accent-dark) !important;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════════════════════════════════ */
+
+/*    RESPONSIVE═ */
+
 @media (max-width: 1400px) {
     #container.main-container {
         grid-template-columns: 1fr 1fr;
