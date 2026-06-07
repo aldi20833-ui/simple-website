@@ -37,28 +37,6 @@ body {
 }
 
 /* HEADER */
-.header-title{
-    background: linear-gradient(90deg,#00695c,#00897b);
-    color: white;
-    text-align: center;
-    padding: 18px 0 18px 0;
-    box-shadow: 0 4px 12px rgba(0,0,0,.15);
-}
-
-.header-title h1{
-    margin: 0;
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: 1px;
-}
-
-.subtitle{
-    margin-top: 6px;
-    font-size: 13px;
-    font-weight: 400;
-    opacity: 0.9;
-    letter-spacing: 0.3px;
-}
 
 h1 {
     background: linear-gradient(90deg, #00695c, #00897b);
@@ -69,6 +47,15 @@ h1 {
     letter-spacing: 1px;
     text-align: center;
     box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+
+h1 .subtitle{
+    display: block;
+    margin-top: 6px;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    opacity: 0.9;
+    letter-spacing: 0.3px;
 }
 
 h2, h3 {
