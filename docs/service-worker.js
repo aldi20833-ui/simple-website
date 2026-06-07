@@ -1,96 +1,80 @@
 // ═══════════════════════════════════════════════════════════════════
 // SERVICE WORKER — BLDC Motor Simulator
-// Untuk offline support dan caching
 // ═══════════════════════════════════════════════════════════════════
 
-const CACHE_NAME = 'bldc-motor-v1';
+const CACHE_NAME = 'bldc-motor-final-v10';
+
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/script_modified.js',
-  '/bldc-helper.js',
-  '/manifest.json'
+  './finalproject.html',
+  './stylefinalproject.css',
+  './script_finalproject.js',
+  './bldc-helperfinalproject.js',
+  './manifestfinalproject.json',
+  './icon-192final.png',
+  './icon-512final.png'
 ];
 
-// ─────────────────────────────────────────────────────────────────
-// INSTALL EVENT — Cache files
-// ─────────────────────────────────────────────────────────────────
+// INSTALL
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Cache opened');
+        console.log('Cache opened:', CACHE_NAME);
         return cache.addAll(urlsToCache);
       })
-      .catch(error => {
-        console.log('Cache failed:', error);
-      })
+      .then(() => self.skipWaiting())
+      .catch(error => console.error('Cache failed:', error))
   );
-  self.skipWaiting();
 });
 
-// ─────────────────────────────────────────────────────────────────
-// ACTIVATE EVENT — Clean old caches
-// ─────────────────────────────────────────────────────────────────
+// ACTIVATE
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+    caches.keys()
+      .then(cacheNames => {
+        return Promise.all(
+          cacheNames.map(cacheName => {
+            if (cacheName !== CACHE_NAME) {
+              console.log('Deleting old cache:', cacheName);
+              return caches.delete(cacheName);
+            }
+          })
+        );
+      })
+      .then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-// ─────────────────────────────────────────────────────────────────
-// FETCH EVENT — Serve from cache, fallback to network
-// ─────────────────────────────────────────────────────────────────
+// FETCH
 self.addEventListener('fetch', event => {
-  // Skip non-GET requests
-  if (event.request.method !== 'GET') {
+  if (event.request.method !== 'GET') return;
+
+  const requestURL = new URL(event.request.url);
+
+  // Abaikan request dari Chrome Extension, DevTools, dan skema selain http/https
+  if (requestURL.protocol !== 'http:' && requestURL.protocol !== 'https:') {
     return;
   }
 
   event.respondWith(
-    caches.match(event.request)
+    fetch(event.request)
       .then(response => {
-        // Serve from cache if available
-        if (response) {
+        if (!response || response.status !== 200) {
           return response;
         }
 
-        // Otherwise fetch from network
-        return fetch(event.request)
-          .then(response => {
-            // Don't cache non-successful responses
-            if (!response || response.status !== 200 || response.type === 'error') {
-              return response;
-            }
+        const responseToCache = response.clone();
 
-            // Clone the response
-            const responseToCache = response.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, responseToCache);
+        });
 
-            // Cache the response
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
-          })
-          .catch(error => {
-            // Return offline page if fetch fails
-            console.log('Fetch failed:', error);
-            // You can return a custom offline page here if needed
-          });
+        return response;
+      })
+      .catch(() => {
+        return caches.match(event.request);
       })
   );
 });
 
-console.log('Service Worker loaded');
+console.log('Service Worker loaded:', CACHE_NAME);
