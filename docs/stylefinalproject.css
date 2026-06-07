@@ -1,6 +1,4 @@
-/* ═══════════════════════════════════════════════════════════════════
-   RESET & BASE
-═══════════════════════════════════════════════════════════════════ */
+
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -8,68 +6,82 @@
 }
 
 :root {
-    --box-bg:      #ffffff;
-    --border:      #e0e0e0;
-    --text:        #222222;
+    --bg-main: #eef2f3;
+    --bg-panel: #ffffff;
+    --bg-soft: #f7f9fa;
 
-    /* UI color: tidak memakai merah/biru */
-    --accent:      #00695c;
-    --accent-dark: #004d40;
+    --border: #d6dde3;
+    --border-strong: #9aa7b2;
 
-    /* tombol khusus */
-    --warning:      #f9a825;
-    --warning-dark: #f57f17;
+    --text: #1f2933;
+    --text-soft: #5f6b76;
+
+    /* UI accent: tidak merah/biru */
+    --accent: #00897b;
+    --accent-dark: #00695c;
+    --accent-light: #d9f3ef;
+
+    --warning: #f9a825;
+    --warning-dark: #c17900;
+
+    --shadow-soft: 0 6px 18px rgba(31, 41, 51, 0.12);
+    --shadow-panel: 0 10px 28px rgba(31, 41, 51, 0.16);
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size:   13px;
-    background:  #f5f5f5;
-    color:       var(--text);
-    min-height:  100vh;
+    font-size: 13px;
+    background: #f2f5f6;
+    color: var(--text);
+    min-height: 100vh;
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════════════════════════════ */
 h1 {
-    background:  var(--accent);
-    color:       #ffffff;
-    padding:     14px 12px 10px;
-    font-size:   18px;
-    font-weight: 700;
-    letter-spacing: 0.4px;
+    background: linear-gradient(90deg, #00695c, #00897b);
+    color: #ffffff;
+    padding: 18px 12px 55px;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 1px;
     text-align: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
 }
 
-h2 {
+h2, h3 {
     font-size: 12px !important;
-    font-weight: 700;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--accent);
+    letter-spacing: 1.6px;
+    color: var(--accent-dark);
     margin: 0 0 8px 0 !important;
-    padding-bottom: 4px;
-    border-bottom: 2px solid var(--accent);
-}
-
-h3 {
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--accent);
-    margin-bottom: 8px;
-    padding-bottom: 4px;
+    padding-bottom: 6px;
     border-bottom: 2px solid var(--accent);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   MAIN CONTAINER
+   MAIN LAYOUT
 ═══════════════════════════════════════════════════════════════════ */
+
 #container.main-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 14px;
-    padding: 14px;
+    gap: 16px;
+
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+    padding-top: 0;
+
+    margin-top: 15px;   /* sebelumnya -50px */
+
     min-height: calc(100vh - 80px);
+
+    position: relative;
+    z-index: 5;
+
     align-items: stretch;
 }
 
@@ -77,28 +89,26 @@ h3 {
     display: flex;
     flex-direction: column;
     height: 100%;
-    gap: 12px;
+    gap: 14px;
     background: transparent;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   KOLOM 1
-═══════════════════════════════════════════════════════════════════ */
 #col-1-main-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     height: 100%;
 }
 
 .row-1-horizontal {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 12px;
+    gap: 14px;
     height: auto;
 }
 
-#input-section {
+#input-section,
+#output-section {
     width: 100%;
     height: 400px;
 }
@@ -109,8 +119,6 @@ h3 {
 }
 
 #output-section {
-    width: 100%;
-    height: 400px;
     overflow: hidden;
 }
 
@@ -119,96 +127,83 @@ h3 {
     height: 250px;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   KOLOM 2
-═══════════════════════════════════════════════════════════════════ */
 #canvas-2-section {
     flex: 0 0 400px;
     height: 100px;
 }
 
-#grafik-tegangan-section {
-    flex: 0 0 350px;
-    min-height: 200px;
-    overflow: hidden;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   KOLOM 3
-═══════════════════════════════════════════════════════════════════ */
-#grafik-theta-section {
-    flex: 0 0 400px;
-    min-height: 200px;
-    overflow: hidden;
-}
-
+#grafik-tegangan-section,
 #data-logger-section {
     flex: 0 0 350px;
     min-height: 200px;
     overflow: hidden;
 }
 
+#grafik-theta-section {
+    flex: 0 0 400px;
+    min-height: 200px;
+    overflow: hidden;
+}
+
 /* ═══════════════════════════════════════════════════════════════════
-   PANEL BOX
+   PANEL BOX — LIGHT INDUSTRIAL CARD
 ═══════════════════════════════════════════════════════════════════ */
 .panel-box {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background: var(--box-bg);
-    border-radius: 8px;
-    padding: 12px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.09);
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(245,248,249,0.98));
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--accent);
+    border-radius: 12px;
+    padding: 13px;
+    box-shadow: var(--shadow-panel);
     overflow: hidden;
     flex: 1;
+    position: relative;
+}
+
+.panel-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+.panel-box::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 36px;
+    height: 6px;
+    border-radius: 99px;
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(0, 137, 123, 0.28) 0,
+        rgba(0, 137, 123, 0.28) 4px,
+        transparent 4px,
+        transparent 8px
+    );
+    opacity: 0.7;
 }
 
 .ket {
     font-size: 10px;
-    color: #777;
+    color: var(--text-soft);
     font-style: italic;
     margin: 4px 0 2px;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   INPUT SECTION
+   INPUT / OUTPUT / TEXTAREA
 ═══════════════════════════════════════════════════════════════════ */
-#input-box {
-    width: 100%;
-    height: 100%;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-#text-input {
-    width: 100%;
-    height: 100%;
-    min-height: 140px;
-    max-height: 300px;
-    font-family: 'Courier New', monospace !important;
-    font-size: 11px !important;
-    line-height: 1.3;
-    border: 1px solid var(--border) !important;
-    border-radius: 4px;
-    padding: 6px !important;
-    background: #fff;
-    color: var(--text);
-    outline: none;
-    resize: vertical;
-    overflow-y: auto;
-    flex: 1;
-}
-
-#text-input:focus {
-    border-color: var(--accent) !important;
-    box-shadow: 0 0 4px rgba(0, 105, 92, 0.2);
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   BUTTON & BADGE SECTION
-═══════════════════════════════════════════════════════════════════ */
+#input-box,
+#output-box,
 #button-badge-box {
     width: 100%;
     height: 100%;
@@ -218,65 +213,128 @@ h3 {
     gap: 8px;
 }
 
+#text-input,
+#text-output,
+textarea {
+    width: 100%;
+    height: 100%;
+    min-height: 140px;
+    max-height: 300px;
+    font-family: 'Courier New', monospace !important;
+    font-size: 11px !important;
+    line-height: 1.45;
+    border: 1px solid #b9c3cc !important;
+    border-radius: 8px;
+    padding: 9px !important;
+    background: #ffffff;
+    color: var(--text);
+    outline: none;
+    overflow-y: auto;
+    flex: 1;
+    box-shadow: inset 0 1px 8px rgba(31, 41, 51, 0.06);
+}
+
+#text-input {
+    resize: vertical;
+}
+
+#text-output,
+textarea[readonly] {
+    background: #f5f7f8;
+    color: #263238;
+    resize: none;
+    cursor: default;
+}
+
+#text-input:focus,
+#text-output:focus,
+textarea:focus {
+    border-color: var(--accent) !important;
+    box-shadow:
+        0 0 0 3px rgba(0, 137, 123, 0.16),
+        inset 0 1px 8px rgba(31, 41, 51, 0.06);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   BUTTONS — INDUSTRIAL CONTROL STYLE
+═══════════════════════════════════════════════════════════════════ */
 #button-container {
     display: flex !important;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     width: 100%;
     flex: 1;
 }
 
 #button-container button {
     width: 100%;
-    height: 36px;
-    background: var(--accent);
+    height: 39px;
+    background: linear-gradient(180deg, var(--accent), var(--accent-dark));
     color: #ffffff;
-    border: none;
-    border-radius: 5px;
+    border: 1px solid #005f54;
+    border-radius: 8px;
     padding: 8px 10px !important;
     font-size: 10px;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: 0.8px;
     cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
     text-align: center;
+    text-transform: uppercase;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.28),
+        0 5px 12px rgba(0, 105, 92, 0.28);
+    transition: transform 0.1s, filter 0.15s, box-shadow 0.15s;
 }
 
 #button-container button:hover {
-    background: var(--accent-dark);
+    filter: brightness(1.08);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.28),
+        0 7px 16px rgba(0, 105, 92, 0.34);
 }
 
 #button-container button:active {
-    transform: scale(0.97);
+    transform: translateY(1px) scale(0.98);
 }
 
-/* Tombol GAYA tidak memakai merah/biru */
+/* Tombol GAYA: amber, bukan merah/biru */
 #btn-gaya {
-    background: var(--warning) !important;
-    color: #222222 !important;
+    background: linear-gradient(180deg, #ffca28, var(--warning-dark)) !important;
+    color: #1f1f1f !important;
+    border-color: #9a6500 !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.4),
+        0 5px 12px rgba(249, 168, 37, 0.28) !important;
 }
 
 #btn-gaya:hover {
-    background: var(--warning-dark) !important;
-    color: #ffffff !important;
+    filter: brightness(1.06);
 }
 
 #btn-gaya.aktif {
-    background: #ffb300 !important;
-    color: #222222 !important;
-    box-shadow: 0 0 6px rgba(249, 168, 37, 0.8);
+    background: linear-gradient(180deg, #ffd54f, #f9a825) !important;
+    color: #1f1f1f !important;
+    box-shadow:
+        0 0 10px rgba(249, 168, 37, 0.65),
+        inset 0 1px 0 rgba(255,255,255,0.35) !important;
 }
 
-/* Badge status tidak memakai merah/biru */
+/* ═══════════════════════════════════════════════════════════════════
+   STATUS BADGE
+═══════════════════════════════════════════════════════════════════ */
 .sbadge {
     width: 100%;
-    padding: 10px 10px;
+    padding: 11px 10px;
     text-align: center;
     font-size: 10px;
-    font-weight: 600;
-    border-radius: 20px;
+    font-weight: 800;
+    border-radius: 999px;
     background: #e0f2f1;
     color: #004d40;
     border: 1px solid #80cbc4;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.8),
+        0 4px 10px rgba(0, 137, 123, 0.12);
 }
 
 .sbadge.s0 {
@@ -292,50 +350,13 @@ h3 {
 }
 
 .sbadge.s2 {
-    background: #e0f2f1;
+    background: #dff7f1;
     color: #004d40;
-    border-color: #80cbc4;
+    border-color: #00a884;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   OUTPUT SECTION
-═══════════════════════════════════════════════════════════════════ */
-#output-box {
-    width: 100%;
-    height: 100%;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    overflow: hidden;
-}
-
-#text-output {
-    width: 100%;
-    height: 100%;
-    min-height: 140px;
-    max-height: 300px;
-    font-family: 'Courier New', monospace !important;
-    font-size: 11px !important;
-    line-height: 1.3;
-    border: 1px solid var(--border) !important;
-    border-radius: 4px;
-    padding: 6px !important;
-    background: #f9f9f9;
-    color: #444;
-    outline: none;
-    resize: none;
-    overflow-y: auto;
-    flex: 1;
-}
-
-#text-output:focus {
-    border-color: var(--accent) !important;
-    box-shadow: 0 0 4px rgba(0, 105, 92, 0.2);
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   CANVAS STYLING
+   CANVAS BOX
 ═══════════════════════════════════════════════════════════════════ */
 #canvas-1-box,
 #canvas-2-box,
@@ -355,65 +376,47 @@ canvas {
     display: block;
     width: 100% !important;
     height: 100% !important;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    background: #fff;
+    border: 1px solid #b7c2ca;
+    border-radius: 8px;
+    background: #ffffff;
     margin-top: 4px;
     flex: 1;
+    box-shadow:
+        inset 0 0 12px rgba(31, 41, 51, 0.06),
+        0 2px 8px rgba(31, 41, 51, 0.06);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   TEXTAREA DATA LOGGER
+   DATA LOGGER — INDUSTRIAL TERMINAL
 ═══════════════════════════════════════════════════════════════════ */
-textarea {
-    width: 100%;
-    height: 100%;
-    min-height: 150px;
-    font-family: 'Courier New', monospace !important;
-    font-size: 11px !important;
-    line-height: 1.3;
-    border: 1px solid var(--border) !important;
-    border-radius: 4px;
-    padding: 6px !important;
-    background: #fff;
-    color: var(--text);
-    outline: none;
-    resize: none;
-    overflow-y: auto;
-    flex: 1;
-}
-
-textarea:focus {
-    border-color: var(--accent) !important;
-    box-shadow: 0 0 4px rgba(0, 105, 92, 0.2);
-}
-
-textarea[readonly] {
-    background: #f9f9f9;
-    color: #444;
-    cursor: default;
+#data-logger {
+    background: #fafafa !important;
+    color: #d7fff5 !important;
+    border-color: #455a64 !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
    PWA INSTALL PROMPT
 ═══════════════════════════════════════════════════════════════════ */
 #install-prompt {
-    background: var(--accent) !important;
-    color: #ffffff !important;
+    background: linear-gradient(180deg, #ffffff, #eef4f3) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--accent);
+    box-shadow: var(--shadow-panel) !important;
 }
 
 #install-btn {
-    background: #ffffff !important;
-    color: var(--accent) !important;
-}
-
-#cancel-install {
-    background: rgba(255,255,255,0.25) !important;
+    background: linear-gradient(180deg, var(--accent), var(--accent-dark)) !important;
     color: #ffffff !important;
 }
 
+#cancel-install {
+    background: rgba(0, 137, 123, 0.12) !important;
+    color: var(--accent-dark) !important;
+}
+
 /* ═══════════════════════════════════════════════════════════════════
-   RESPONSIVE — TABLET & MOBILE
+   RESPONSIVE
 ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 1400px) {
     #container.main-container {
@@ -446,10 +449,7 @@ textarea[readonly] {
         grid-template-columns: 1fr;
     }
 
-    #text-input {
-        min-height: 100px;
-    }
-
+    #text-input,
     #text-output {
         min-height: 100px;
     }
