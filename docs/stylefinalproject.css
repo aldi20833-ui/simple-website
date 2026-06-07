@@ -1,13 +1,24 @@
 /* ═══════════════════════════════════════════════════════════════════
    RESET & BASE
 ═══════════════════════════════════════════════════════════════════ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 :root {
     --box-bg:      #ffffff;
     --border:      #e0e0e0;
     --text:        #222222;
-    --accent:      #1565c0;
+
+    /* UI color: tidak memakai merah/biru */
+    --accent:      #00695c;
+    --accent-dark: #004d40;
+
+    /* tombol khusus */
+    --warning:      #f9a825;
+    --warning-dark: #f57f17;
 }
 
 body {
@@ -25,6 +36,7 @@ h1 {
     font-size:   18px;
     font-weight: 700;
     letter-spacing: 0.4px;
+    text-align: center;
 }
 
 h2 {
@@ -50,142 +62,94 @@ h3 {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   ╔═══════════════════════════════════════════════════════════════════╗
-   ║             MAIN CONTAINER — HEIGHT & WIDTH                       ║
-   ║                                                                   ║
-   ║  - 3 KOLOM BESAR (1fr 1fr 1fr = sama rata)                      ║
-   ║  - HEIGHT: 100vh - 80px (full screen - header)                  ║
-   ║  - PADDING: 14px (spacing)                                       ║
-   ║  - GAP: 14px (jarak antar kolom)                                ║
-   ╚═══════════════════════════════════════════════════════════════════╝
+   MAIN CONTAINER
 ═══════════════════════════════════════════════════════════════════ */
 #container.main-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;  /* ← 3 KOLOM SAMA LEBAR */
-    gap: 14px;                           /* ← JARAK ANTAR KOLOM */
-    padding: 14px;                       /* ← PADDING CONTAINER */
-    min-height: calc(100vh - 80px);     /* ← TINGGI (full screen - header 80px) */
-    align-items: stretch;                /* ← SEMUA KOLOM STRETCH (tinggi sama) */
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    padding: 14px;
+    min-height: calc(100vh - 80px);
+    align-items: stretch;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   ╔═══════════════════════════════════════════════════════════════════╗
-   ║         MAIN KOLOM — HEIGHT & WIDTH (3 CONTAINER UTAMA)           ║
-   ║                                                                   ║
-   ║  .main-col:                                                       ║
-   ║    - DISPLAY: flex (vertical)                                    ║
-   ║    - HEIGHT: 100% (ikuti parent - full height)                  ║
-   ║    - FLEX: 1 (stretch)                                           ║
-   ║    - GAP: 12px (jarak antar section)                            ║
-   ╚═══════════════════════════════════════════════════════════════════╝
-═══════════════════════════════════════════════════════════════════ */
 .main-col {
     display: flex;
     flex-direction: column;
-    height: 100%;                        /* ← TINGGI 100% (FULL) */
-    gap: 12px;                           /* ← JARAK ANTAR SECTION */
+    height: 100%;
+    gap: 12px;
     background: transparent;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   ╔═══════════════════════════════════════════════════════════════════╗
-   ║      KOLOM 1 (#col-1-main-container) — HEIGHT & WIDTH            ║
-   ║                                                                   ║
-   ║  2 ROWS:                                                          ║
-   ║  - ROW 1 (Horizontal): INPUT | BUTTON | OUTPUT (1fr 1fr 1fr)    ║
-   ║  - ROW 2: CANVAS 1 (penuh lebar, grow)                          ║
-   ║                                                                   ║
-   ║  Hasil: Horizontal layout atas, Canvas penuh bawah               ║
-   ╚═══════════════════════════════════════════════════════════════════╝
+   KOLOM 1
 ═══════════════════════════════════════════════════════════════════ */
 #col-1-main-container {
-    display: flex;                       /* ← FLEX COLUMN */
+    display: flex;
     flex-direction: column;
     gap: 12px;
-    height: 100%;                        /* ← TINGGI 100% */
+    height: 100%;
 }
 
-/* ROW 1: HORIZONTAL LAYOUT (INPUT | BUTTON | OUTPUT) */
 .row-1-horizontal {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;  /* ← 3 KOLOM HORIZONTAL SAMA LEBAR */
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 12px;
-    height: auto;                        /* ← AUTO HEIGHT */
+    height: auto;
 }
 
 #input-section {
-    width: 100%;                         /* ← WIDTH 100% */
-    height: 400px;                        /* ← AUTO HEIGHT */
+    width: 100%;
+    height: 400px;
 }
 
 #button-section {
-    width: 100%;                         /* ← WIDTH 100% */
-    height: auto;                        /* ← AUTO HEIGHT */
+    width: 100%;
+    height: auto;
 }
 
 #output-section {
-    width: 100%;                         /* ← WIDTH 100% */
-    height: 400px;                        /* ← AUTO HEIGHT */
+    width: 100%;
+    height: 400px;
     overflow: hidden;
 }
 
 #canvas-1-section {
-    flex: 0 0 350px;      /* ← Ganti 280 ke 250 untuk lebih kecil */
+    flex: 0 0 350px;
     height: 250px;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   ╔═══════════════════════════════════════════════════════════════════╗
-   ║      KOLOM 2 (#col-2-main-container) — HEIGHT & WIDTH            ║
-   ║                                                                   ║
-   ║  2 SECTIONS (CANVAS 2, GRAFIK TEGANGAN):                         ║
-   ║    - #canvas-2-section:       flex: 1 (grow 50%)                ║
-   ║    - #grafik-tegangan-section: flex: 1 (grow 50%)               ║
-   ║                                                                   ║
-   ║  Hasil: Terbagi sama rata 50:50                                  ║
-   ╚═══════════════════════════════════════════════════════════════════╝
+   KOLOM 2
 ═══════════════════════════════════════════════════════════════════ */
-
-
-/* SEKARANG (FIXED 300px) */
 #canvas-2-section {
-    flex: 0 0 400px;       /* ← FIXED HEIGHT 300px */
+    flex: 0 0 400px;
     height: 100px;
 }
 
 #grafik-tegangan-section {
-    flex: 0 0 350px;                      /* ← GROW 50% */
+    flex: 0 0 350px;
     min-height: 200px;
     overflow: hidden;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   ╔═══════════════════════════════════════════════════════════════════╗
-   ║      KOLOM 3 (#col-3-main-container) — HEIGHT & WIDTH            ║
-   ║                                                                   ║
-   ║  2 SECTIONS (GRAFIK THETA, DATA LOGGER):                         ║
-   ║    - #grafik-theta-section:   flex: 1 (grow 50%)                ║
-   ║    - #data-logger-section:    flex: 1 (grow 50%)                ║
-   ║                                                                   ║
-   ║  Hasil: Terbagi sama rata 50:50                                  ║
-   ╚═══════════════════════════════════════════════════════════════════╝
+   KOLOM 3
 ═══════════════════════════════════════════════════════════════════ */
-
-
 #grafik-theta-section {
-    flex: 0 0 400px;                    /* ← GROW 50% */
+    flex: 0 0 400px;
     min-height: 200px;
     overflow: hidden;
 }
 
 #data-logger-section {
-    flex: 0 0 350px;                       /* ← GROW 50% */
+    flex: 0 0 350px;
     min-height: 200px;
     overflow: hidden;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   PANEL BOX — Universal untuk semua container
+   PANEL BOX
 ═══════════════════════════════════════════════════════════════════ */
 .panel-box {
     display: flex;
@@ -196,7 +160,7 @@ h3 {
     padding: 12px;
     box-shadow: 0 1px 6px rgba(0,0,0,0.09);
     overflow: hidden;
-    flex: 1;                             /* ← GROW sesuai parent */
+    flex: 1;
 }
 
 .ket {
@@ -207,22 +171,22 @@ h3 {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   INPUT SECTION (KOLOM 1, ROW 1)
+   INPUT SECTION
 ═══════════════════════════════════════════════════════════════════ */
 #input-box {
-    width: 100%;                         /* ← WIDTH 100% */
-    height: 100%;                        /* ← HEIGHT 100% */
-    min-height: 200px;                   /* ← MIN HEIGHT */
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
 #text-input {
-    width: 100%;                         /* ← WIDTH 100% */
-    height: 100%;                        /* ← HEIGHT 100% */
-    min-height: 140px;                   /* ← MIN HEIGHT */
-    max-height: 300px;                   /* ← MAX HEIGHT */
+    width: 100%;
+    height: 100%;
+    min-height: 140px;
+    max-height: 300px;
     font-family: 'Courier New', monospace !important;
     font-size: 11px !important;
     line-height: 1.3;
@@ -239,16 +203,16 @@ h3 {
 
 #text-input:focus {
     border-color: var(--accent) !important;
-    box-shadow: 0 0 4px rgba(21, 101, 192, 0.2);
+    box-shadow: 0 0 4px rgba(0, 105, 92, 0.2);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   BUTTON & BADGE SECTION (KOLOM 1, ROW 1)
+   BUTTON & BADGE SECTION
 ═══════════════════════════════════════════════════════════════════ */
 #button-badge-box {
-    width: 100%;                         /* ← WIDTH 100% */
-    height: 100%;                        /* ← HEIGHT 100% */
-    min-height: 200px;                   /* ← MIN HEIGHT */
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -258,15 +222,15 @@ h3 {
     display: flex !important;
     flex-direction: column;
     gap: 8px;
-    width: 100%;                         /* ← WIDTH 100% */
+    width: 100%;
     flex: 1;
 }
 
 #button-container button {
-    width: 100%;                         /* ← WIDTH 100% */
-    height: 36px;                        /* ← FIXED HEIGHT */
+    width: 100%;
+    height: 36px;
     background: var(--accent);
-    color: #fff;
+    color: #ffffff;
     border: none;
     border-radius: 5px;
     padding: 8px 10px !important;
@@ -278,49 +242,68 @@ h3 {
 }
 
 #button-container button:hover {
-    background: #0d47a1;
+    background: var(--accent-dark);
 }
 
 #button-container button:active {
     transform: scale(0.97);
 }
 
+/* Tombol GAYA tidak memakai merah/biru */
 #btn-gaya {
-    background: #e65100 !important;
+    background: var(--warning) !important;
+    color: #222222 !important;
 }
 
 #btn-gaya:hover {
-    background: #bf360c !important;
+    background: var(--warning-dark) !important;
+    color: #ffffff !important;
 }
 
 #btn-gaya.aktif {
-    background: #f57c00 !important;
-    box-shadow: 0 0 6px #ff9800;
+    background: #ffb300 !important;
+    color: #222222 !important;
+    box-shadow: 0 0 6px rgba(249, 168, 37, 0.8);
 }
 
+/* Badge status tidak memakai merah/biru */
 .sbadge {
-    width: 100%;                         /* ← WIDTH 100% */
-    padding: 10px 10px;                  /* ← PADDING */
+    width: 100%;
+    padding: 10px 10px;
     text-align: center;
     font-size: 10px;
     font-weight: 600;
     border-radius: 20px;
-    background: #e8f5e9;
-    color: #1b5e20;
-    border: 1px solid #a5d6a7;
+    background: #e0f2f1;
+    color: #004d40;
+    border: 1px solid #80cbc4;
 }
 
-.sbadge.s0 { background: #fce4ec; color: #b71c1c; border-color: #ef9a9a; }
-.sbadge.s1 { background: #fff8e1; color: #e65100; border-color: #ffcc80; }
-.sbadge.s2 { background: #e8f5e9; color: #1b5e20; border-color: #a5d6a7; }
+.sbadge.s0 {
+    background: #eeeeee;
+    color: #424242;
+    border-color: #bdbdbd;
+}
+
+.sbadge.s1 {
+    background: #fff8e1;
+    color: #7a5200;
+    border-color: #f9a825;
+}
+
+.sbadge.s2 {
+    background: #e0f2f1;
+    color: #004d40;
+    border-color: #80cbc4;
+}
 
 /* ═══════════════════════════════════════════════════════════════════
-   OUTPUT SECTION (KOLOM 1, ROW 1)
+   OUTPUT SECTION
 ═══════════════════════════════════════════════════════════════════ */
 #output-box {
-    width: 100%;                         /* ← WIDTH 100% */
-    height: 100%;                        /* ← HEIGHT 100% */
-    min-height: 200px;                   /* ← MIN HEIGHT */
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -328,10 +311,10 @@ h3 {
 }
 
 #text-output {
-    width: 100%;                         /* ← WIDTH 100% */
-    height: 100%;                        /* ← HEIGHT 100% */
-    min-height: 140px;                   /* ← MIN HEIGHT */
-    max-height: 300px;                   /* ← MAX HEIGHT */
+    width: 100%;
+    height: 100%;
+    min-height: 140px;
+    max-height: 300px;
     font-family: 'Courier New', monospace !important;
     font-size: 11px !important;
     line-height: 1.3;
@@ -348,6 +331,7 @@ h3 {
 
 #text-output:focus {
     border-color: var(--accent) !important;
+    box-shadow: 0 0 4px rgba(0, 105, 92, 0.2);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -358,8 +342,8 @@ h3 {
 #grafik-tegangan-box,
 #grafik-theta-box,
 #data-logger-box {
-    width: 100%;                         /* ← WIDTH 100% */
-    height: 100%;                        /* ← HEIGHT 100% */
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -369,8 +353,8 @@ h3 {
 
 canvas {
     display: block;
-    width: 100% !important;              /* ← WIDTH 100% */
-    height: 100% !important;             /* ← HEIGHT 100% (responsive) */
+    width: 100% !important;
+    height: 100% !important;
     border: 1px solid var(--border);
     border-radius: 4px;
     background: #fff;
@@ -379,12 +363,12 @@ canvas {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   TEXTAREA (DATA LOGGER)
+   TEXTAREA DATA LOGGER
 ═══════════════════════════════════════════════════════════════════ */
 textarea {
-    width: 100%;                         /* ← WIDTH 100% */
-    height: 100%;                        /* ← HEIGHT 100% */
-    min-height: 150px;                   /* ← MIN HEIGHT */
+    width: 100%;
+    height: 100%;
+    min-height: 150px;
     font-family: 'Courier New', monospace !important;
     font-size: 11px !important;
     line-height: 1.3;
@@ -401,7 +385,7 @@ textarea {
 
 textarea:focus {
     border-color: var(--accent) !important;
-    box-shadow: 0 0 4px rgba(21, 101, 192, 0.2);
+    box-shadow: 0 0 4px rgba(0, 105, 92, 0.2);
 }
 
 textarea[readonly] {
@@ -411,7 +395,25 @@ textarea[readonly] {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   RESPONSIVE — Tablet & Mobile
+   PWA INSTALL PROMPT
+═══════════════════════════════════════════════════════════════════ */
+#install-prompt {
+    background: var(--accent) !important;
+    color: #ffffff !important;
+}
+
+#install-btn {
+    background: #ffffff !important;
+    color: var(--accent) !important;
+}
+
+#cancel-install {
+    background: rgba(255,255,255,0.25) !important;
+    color: #ffffff !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE — TABLET & MOBILE
 ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 1400px) {
     #container.main-container {
@@ -420,7 +422,7 @@ textarea[readonly] {
         padding: 12px;
         min-height: auto;
     }
-    
+
     #text-input {
         min-height: 120px;
     }
@@ -433,7 +435,7 @@ textarea[readonly] {
         padding: 12px;
         min-height: auto;
     }
-    
+
     .main-col {
         min-height: 600px;
     }
@@ -443,11 +445,11 @@ textarea[readonly] {
     #container.main-container {
         grid-template-columns: 1fr;
     }
-    
+
     #text-input {
         min-height: 100px;
     }
-    
+
     #text-output {
         min-height: 100px;
     }
