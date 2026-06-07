@@ -38,24 +38,35 @@ body {
 
 /* HEADER */
 
-h1 {
-    background: linear-gradient(90deg, #00695c, #00897b);
-    color: #ffffff;
-    padding: 18px 12px 55px;
-    font-size: 20px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    text-align: center;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+h1{
+    background:#00897b !important;
+    color:white;
+
+    text-align:center;
+
+    padding:18px 0;
+
+    margin:0;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.12);
+
+    border:none;
 }
 
 h1 .subtitle{
-    display: block;
-    margin-top: 6px;
-    font-size: 12px !important;
-    font-weight: 400 !important;
-    opacity: 0.9;
-    letter-spacing: 0.3px;
+    display:block;
+
+    margin-top:8px;
+
+    font-size:13px !important;
+    font-weight:400 !important;
+
+    background:transparent !important;
+
+    border:none !important;
+    box-shadow:none !important;
+
+    opacity:.92;
 }
 
 h2, h3 {
