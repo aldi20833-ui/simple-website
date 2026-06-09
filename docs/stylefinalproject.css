@@ -409,9 +409,12 @@ canvas {
 /*    DATA LOGGER */
 
 #data-logger {
-    background: #fafafa !important;
-    color: #d7fff5 !important;
-    border-color: #455a64 !important;
+    background: #ffffff !important;
+    color: #222222 !important;
+    border: 1px solid #b8bec7 !important;
+    font-family: 'Courier New', monospace !important;
+    font-size: 11px !important;
+    line-height: 1.45;
 }
 
 
