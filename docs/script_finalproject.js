@@ -438,12 +438,12 @@ function loopGaya(wms) {
             if (Math.abs(err) < 0.003 && Math.abs(F.omega) < 0.005) {
                 M.sudutRotor = thetaEq * 180 / Math.PI;
                 M.sudutRad   = thetaEq;
-                M.fase = [1, -1]; M.labelFase = 'A+(N) B-(S) Diam';
+                M.fase = [-1, 1]; M.labelFase = 'A+(N) B-(S) Diam';
                 _stopGaya(); drawC2(); drawGraph(); drawGraphTheta(); output(); return;
             }
         }
 
-        M.fase      = [1, -1];
+        M.fase      = [-1, 1];
         M.labelFase = 'A+(N) B-(S) Statis';
 
     } else {
